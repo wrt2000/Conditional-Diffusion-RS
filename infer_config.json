@@ -9,7 +9,7 @@
         "tb_logger": "tb_logger",
         "results": "results",
         "checkpoint": "checkpoint",
-        "resume_state": "/workspace/wangruotong/Privacy/ckpt/normal_gen.pth" 
+        "resume_state": "/workspace/wangruotong/Privacy/ckpt/normal_gen.pth"    //pretrain model path
     },
     "datasets": {
         "train": {
@@ -32,7 +32,7 @@
             "num_workers": 8
         }
     },
-    "model": {
+    "model": {    // structure for 256*256
         "which_model_G": "sr3",
         "finetune_norm": false,
         "unet": {
@@ -74,18 +74,13 @@
         }
     },
     "train": {
-        "n_iter": 10000,
+        "n_iter": 10000,  // may need to change
         "val_freq": 1e3,
         "save_checkpoint_freq": 1e4,
         "print_freq": 500,
         "optimizer": {
             "type": "adam",
-            "lr": 1e-4
-        },
-        "ema_scheduler": { 
-            "step_start_ema": 5000,
-            "update_ema_every": 1,
-            "ema_decay": 0.9999
+            "lr": 1e-4  // may need to change
         }
     },
     "wandb": null
