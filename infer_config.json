@@ -1,0 +1,92 @@
+{
+    "name": "test",
+    "phase": "train", 
+    "gpu_ids": [
+        0,1,2,3,4,5,6,7
+    ],
+    "path": { 
+        "log": "logs",
+        "tb_logger": "tb_logger",
+        "results": "results",
+        "checkpoint": "checkpoint",
+        "resume_state": "/workspace/wangruotong/Privacy/ckpt/normal_gen.pth" 
+    },
+    "datasets": {
+        "train": {
+            "name": "network",
+            "dataroot": "/workspace/wangruotong/Privacy/dataset/train",
+            "datatype": "train",
+            "resolution": 256, 
+            "batch_size": 32,
+            "num_workers": 12,
+            "use_shuffle": true,
+            "data_len": -1
+        },
+        "val": {
+            "name": "network",
+            "dataroot": "/workspace/wangruotong/Privacy/dataset/val",
+            "datatype": "val",
+            "resolution": 256,
+            "data_len": -1,
+            "batch_size": 64,
+            "num_workers": 8
+        }
+    },
+    "model": {
+        "which_model_G": "sr3",
+        "finetune_norm": false,
+        "unet": {
+            "in_channel": 6,
+            "out_channel": 3,
+            "inner_channel": 64,
+            "channel_multiplier": [
+                1,
+                2,
+                4,
+                8,
+                8
+            ],
+            "attn_res": [
+                16
+            ],
+            "res_blocks": 2,
+            "dropout": 0.2
+        },
+        "beta_schedule": { 
+            "train": {
+                "schedule": "linear",
+                "n_timestep": 2000,
+                "linear_start": 1e-6,
+                "linear_end": 1e-2
+            },
+            "val": {
+                "schedule": "linear",
+                "n_timestep": 2000,
+                "linear_start": 1e-6,
+                "linear_end": 1e-2
+            }
+        },
+        "diffusion": {
+            "image_size": 256,
+            "channels": 3, 
+            "loss_type": "l1",
+            "conditional": true
+        }
+    },
+    "train": {
+        "n_iter": 10000,
+        "val_freq": 1e3,
+        "save_checkpoint_freq": 1e4,
+        "print_freq": 500,
+        "optimizer": {
+            "type": "adam",
+            "lr": 1e-4
+        },
+        "ema_scheduler": { 
+            "step_start_ema": 5000,
+            "update_ema_every": 1,
+            "ema_decay": 0.9999
+        }
+    },
+    "wandb": null
+}

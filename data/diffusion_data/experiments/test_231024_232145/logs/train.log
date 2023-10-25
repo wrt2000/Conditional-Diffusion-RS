@@ -1,0 +1,86 @@
+23-10-24 23:21:45.591 - INFO:   name: test
+  phase: train
+  gpu_ids: [0, 1, 2, 3, 4, 5, 6, 7]
+  path:[
+    log: data/diffusion_data/experiments/test_231024_232145/logs
+    tb_logger: data/diffusion_data/experiments/test_231024_232145/tb_logger
+    results: data/diffusion_data/experiments/test_231024_232145/results
+    checkpoint: data/diffusion_data/experiments/test_231024_232145/checkpoint
+    resume_state: 
+    experiments_root: data/diffusion_data/experiments/test_231024_232145
+  ]
+  datasets:[
+    train:[
+      name: network
+      dataroot: /workspace/wangruotong/Privacy/dataset/1024/dotav1_with_mask_large/train
+      datatype: train
+      resolution: 256
+      batch_size: 32
+      num_workers: 12
+      use_shuffle: True
+      data_len: -1
+    ]
+    val:[
+      name: network
+      dataroot: /workspace/wangruotong/Privacy/dataset/1024/dotav1_with_mask_large/val
+      datatype: val
+      resolution: 256
+      data_len: 10
+      batch_size: 4
+      num_workers: 8
+    ]
+  ]
+  model:[
+    which_model_G: sr3
+    finetune_norm: False
+    unet:[
+      in_channel: 6
+      out_channel: 3
+      inner_channel: 64
+      channel_multiplier: [1, 2, 4, 8, 8]
+      attn_res: [16]
+      res_blocks: 2
+      dropout: 0.2
+    ]
+    beta_schedule:[
+      train:[
+        schedule: linear
+        n_timestep: 2000
+        linear_start: 1e-06
+        linear_end: 0.01
+      ]
+      val:[
+        schedule: linear
+        n_timestep: 2000
+        linear_start: 1e-06
+        linear_end: 0.01
+      ]
+    ]
+    diffusion:[
+      image_size: 256
+      channels: 3
+      loss_type: l1
+      conditional: True
+    ]
+  ]
+  train:[
+    n_iter: 1050000
+    val_freq: 10000.0
+    save_checkpoint_freq: 10000.0
+    print_freq: 500
+    optimizer:[
+      type: adam
+      lr: 0.0001
+    ]
+    ema_scheduler:[
+      step_start_ema: 5000
+      update_ema_every: 1
+      ema_decay: 0.9999
+    ]
+  ]
+  wandb: None
+  distributed: True
+  log_wandb_ckpt: False
+  log_eval: False
+  enable_wandb: False
+
