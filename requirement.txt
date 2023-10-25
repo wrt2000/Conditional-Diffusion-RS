@@ -1,0 +1,12 @@
+torch>=1.6
+torchvision
+numpy
+pandas
+tqdm
+opencv-python
+pillow
+tensorboardx
+wandb
+argparse
+PIL
+scipy
