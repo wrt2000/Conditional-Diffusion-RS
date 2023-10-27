@@ -107,15 +107,17 @@ if __name__ == "__main__":
 
         visuals['FAKE'] = visuals['FAKE'][-val_data['Image'].shape[0]:]
         for i, img_tensor in enumerate(visuals['FAKE']):
+            save_name = val_loader.dataset.img_path[i].split('/')[-1].split('.')[0]
             Metrics.save_img(
                 Metrics.tensor2img(img_tensor),
-                '{}/{}_{}_fake_{}.png'.format(fake_path, current_step, idx, i)
+                '{}/{}_{}_fake_{}_{}.png'.format(fake_path, current_step, idx, i, save_name)
             )
 
         for i, img_tensor in enumerate(visuals['REAL']):
+            save_name = val_loader.dataset.img_path[i].split('/')[-1].split('.')[0]
             Metrics.save_img(
                 Metrics.tensor2img(img_tensor),
-                '{}/{}_{}_ori_{}.png'.format(ori_path, current_step, idx, i)
+                '{}/{}_{}_ori_{}_{}.png'.format(ori_path, current_step, idx, i, save_name)
             )
         Metrics.save_img(
             mask_img, '{}/{}_{}_mask.png'.format(mask_path, current_step, idx))

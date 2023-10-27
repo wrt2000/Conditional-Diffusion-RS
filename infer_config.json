@@ -1,6 +1,6 @@
 {
     "name": "test",
-    "phase": "train", 
+    "phase": "train",   //val
     "gpu_ids": [
         0,1,2,3,4,5,6,7
     ],
@@ -9,7 +9,7 @@
         "tb_logger": "tb_logger",
         "results": "results",
         "checkpoint": "checkpoint",
-        "resume_state": "/workspace/wangruotong/Privacy/ckpt/normal_gen.pth"    //pretrain model path
+        "resume_state": "/workspace/wangruotong/Privacy/ckpt/normal_gen.pth"    //pretrain model path  "" null
     },
     "datasets": {
         "train": {
